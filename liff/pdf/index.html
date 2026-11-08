@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>PDF 整理工具</title>
 <script src="lib/pdf.min.js"></script>
 <script src="lib/pdf.worker.min.js"></script>
@@ -138,12 +138,52 @@ border-radius: 6px; background: var(--bg); color: var(--text); }
 .ed-foot .tip { display: none; }
 }
 @media (max-width: 600px) { #grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); } input[type=text] { width: 130px; } }
+.file-pick { position: relative; overflow: hidden; display: inline-block; }
+.file-pick input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 100px; }
+#ops { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.pick-big { display: none; }
+.hint-touch { display: none; }
+#lineTip { display: none; margin: 8px 16px 0; padding: 10px 12px; border-radius: 8px; font-size: 13px;
+background: #fef3c7; color: #92400e; border: 1px solid #f59e0b; }
+#lineTip a { color: inherit; font-weight: 600; }
+body.in-line #lineTip { display: block; }
+#saveDlg { width: min(420px, calc(100vw - 32px)); }
+#saveDlg .dlg-body { display: flex; flex-direction: column; gap: 10px; padding: 16px 18px; }
+#saveDlg .dlg-body button { padding: 12px; font-size: 16px; }
+body.touch .card { cursor: default; -webkit-user-select: none; -webkit-touch-callout: none; }
+body.touch .thumb img { -webkit-touch-callout: none; }
+body.touch .card.selected .tools { display: flex; }
+body.touch .tools button { padding: 6px 9px; font-size: 15px; }
+body.touch .hint-desk { display: none; }
+body.touch .hint-touch { display: inline; }
+body.touch .pick-big { display: inline-block; }
+body.touch #empty .drop-text { display: none; }
+body.touch .card.sortable-chosen { transform: scale(1.04); box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+@media (max-width: 600px) {
+header { padding: 8px 12px; gap: 6px; }
+h1 { font-size: 15px; margin-right: 4px; flex: 1; }
+header .spacer { display: none; }
+#outName { order: 10; flex: 1 1 100%; width: auto; font-size: 16px; }
+body.empty #outName { display: none; }
+#ops { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
+background: var(--panel); border-top: 1px solid var(--border); gap: 6px;
+padding: 8px 12px calc(8px + env(safe-area-inset-bottom)); }
+#ops .sep { display: none; }
+#ops button { flex: 1 1 22%; padding: 9px 4px; }
+body.empty #ops { display: none; }
+main { padding: 12px 12px calc(130px + env(safe-area-inset-bottom)); }
+#status, .hint { padding-left: 12px; padding-right: 12px; }
+#sources { padding: 0 12px; }
+#empty { padding: 40px 16px; }
+.ed-field select, .ed-field input[type=text], .link-row select { font-size: 16px; }
+}
 </style>
 </head>
-<body>
+<body class="empty">
 <header>
 <h1>📄 PDF 整理工具</h1>
-<label class="btn">＋ 加入 PDF<input id="fileInput" type="file" accept="application/pdf,.pdf" multiple hidden></label>
+<label class="btn file-pick">＋ 加入 PDF<input id="fileInput" class="file-input" type="file" accept=".pdf,application/pdf" multiple></label>
+<div id="ops">
 <span class="sep"></span>
 <button id="btnAll">全選</button>
 <button id="btnDup" disabled>複製頁面</button>
@@ -152,19 +192,22 @@ border-radius: 6px; background: var(--bg); color: var(--text); }
 <button id="btnDel" class="danger" disabled>刪除頁面</button>
 <button id="btnUndo" disabled>復原</button>
 <button id="btnClear" disabled>清空</button>
+</div>
 <span class="spacer"></span>
 <input id="outName" type="text" value="整理後.pdf" title="匯出檔名">
 <button id="btnExport" class="primary" disabled>匯出 PDF</button>
 </header>
+<div id="lineTip">在 LINE 裡開啟時，可能無法選取或儲存檔案。建議 <a id="lineTipLink" href="#">改用 Safari／Chrome 開啟</a></div>
 <div id="status">尚未載入檔案</div>
 <div id="sources"></div>
-<div class="hint">拖曳頁面縮圖可調整順序　·　<b>雙擊頁面可編輯超連結</b>　·　🔗＝頁面上的連結數，◎＝被其他頁連結，⚠＝連結目標已刪除或重複　·　點選＝單選，<kbd>Ctrl</kbd>/<kbd>⌘</kbd>＋點選＝多選，<kbd>Shift</kbd>＋點選＝範圍選取　·　<kbd>Delete</kbd> 刪除，<kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>D</kbd> 複製，<kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>Z</kbd> 復原</div>
+<div class="hint"><span class="hint-touch">點一下選取頁面（可選多頁），再用下方按鈕刪除、旋轉、複製　·　<b>按住頁面不放再拖曳</b>可調整順序　·　選取後點頁面上的 🔗 可編輯超連結</span><span class="hint-desk">拖曳頁面縮圖可調整順序　·　<b>雙擊頁面可編輯超連結</b>　·　🔗＝頁面上的連結數，◎＝被其他頁連結，⚠＝連結目標已刪除或重複　·　點選＝單選，<kbd>Ctrl</kbd>/<kbd>⌘</kbd>＋點選＝多選，<kbd>Shift</kbd>＋點選＝範圍選取　·　<kbd>Delete</kbd> 刪除，<kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>D</kbd> 複製，<kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>Z</kbd> 復原</span></div>
 <main id="main">
 <div id="empty">
 <p style="font-size:40px">📥</p>
-<p><strong>把 PDF 檔拖曳到這裡</strong>，或點左上角「加入 PDF」</p>
+<p class="drop-text"><strong>把 PDF 檔拖曳到這裡</strong>，或點左上角「加入 PDF」</p>
+<p><label class="btn primary file-pick pick-big" style="padding:12px 22px;font-size:16px;background:var(--accent);color:#fff;border-color:var(--accent)">選擇 PDF 檔案<input class="file-input" type="file" accept=".pdf,application/pdf" multiple></label></p>
 <p>可一次加入多個檔案，所有頁面會依序排在一起（即合併）</p>
-<p style="font-size:12px">檔案只在你的電腦上處理，不會上傳到任何伺服器</p>
+<p style="font-size:12px">檔案只在你的裝置上處理，不會上傳到任何伺服器</p>
 </div>
 <div id="grid"></div>
 </main>
@@ -178,6 +221,17 @@ border-radius: 6px; background: var(--bg); color: var(--text); }
 <div class="dlg-foot">
 <button id="linkDlgCancel">返回修改</button>
 <button id="linkDlgOk" class="primary">確認並匯出</button>
+</div>
+</dialog>
+<dialog id="saveDlg">
+<div class="dlg-head">
+<h2>✅ PDF 已產生</h2>
+<p id="saveDlgInfo"></p>
+</div>
+<div class="dlg-body">
+<button id="saveShare" class="primary">分享／儲存到「檔案」</button>
+<button id="saveDownload">下載</button>
+<button id="saveClose">關閉</button>
 </div>
 </dialog>
 <dialog id="editDlg">
@@ -201,6 +255,6 @@ border-radius: 6px; background: var(--bg); color: var(--text); }
 <button id="edDone" class="primary">完成</button>
 </div>
 </dialog>
-<script src="app.js?v=20261026-1"></script>
+<script src="app.js?v=20261109-1"></script>
 </body>
 </html>
