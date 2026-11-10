@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.line-scdn.net https://liffsdk.line-scdn.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://idly-junction-altitude.ngrok-free.dev https://api.line.me https://*.line.me https://*.line-scdn.net https://uts-front.line-apps.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="robots" content="noindex, nofollow">
+<title>生日五行｜水晶呢喃</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap">
+<style>
+:root {
+--bg: #F5F2F8;
+--card: #FFFFFF;
+--ink: #241B2F;
+--muted: #6E6578;
+--line: #E6DFEE;
+--brand: #6A3D9E;
+--brand-soft: #EFE7F8;
+--on-brand: #FFFFFF;
+--wood: #2F8A55; --fire: #D2463C; --earth: #B07A2E; --metal: #9A8F7A; --water: #2E5FB8;
+--body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+--display: "Noto Serif TC", "Songti TC", serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+--bg: #17131D; --card: #221C2B; --ink: #EEE8F4; --muted: #A79DB3; --line: #352C40;
+--brand: #B795E6; --brand-soft: #2E2440; --on-brand: #1E1428;
+--wood: #6CC690; --fire: #FF7A6E; --earth: #DDA65C; --metal: #C9BFA9; --water: #7FA4F2; color-scheme: dark } }
+:root[data-theme="dark"] {
+--bg: #17131D; --card: #221C2B; --ink: #EEE8F4; --muted: #A79DB3; --line: #352C40;
+--brand: #B795E6; --brand-soft: #2E2440; --on-brand: #1E1428;
+--wood: #6CC690; --fire: #FF7A6E; --earth: #DDA65C; --metal: #C9BFA9; --water: #7FA4F2; color-scheme: dark }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.6; }
+.wrap { max-width: 520px; margin: 0 auto; padding: 20px 16px 48px; display: grid; gap: 14px; }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.hero { display: flex; gap: 12px; align-items: center; padding: 4px 2px; }
+.gem { flex: none; width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg, #8D63C4, #6A3D9E 55%, #4B2577); display: grid; place-items: center; color: #fff; font-family: var(--display); font-size: 1.4rem; }
+.hero h1 { margin: 0; font-family: var(--display); font-size: 1.4rem; letter-spacing: .08em; }
+.hero p { margin: 0; color: var(--muted); font-size: .86rem; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 18px 16px; display: grid; gap: 14px; }
+.card h2 { margin: 0; font-size: 1rem; letter-spacing: .04em; }
+.field { display: grid; gap: 6px; }
+.field > span { font-size: .86rem; font-weight: 700; }
+.field small { color: var(--muted); font-weight: 400; margin-left: 6px; }
+.seg { display: inline-flex; background: var(--brand-soft); border-radius: 999px; padding: 3px; gap: 2px; justify-self: start; }
+.seg button { border: 0; background: none; height: 32px; padding: 0 16px; border-radius: 999px; font-size: .86rem; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--card); color: var(--brand); font-weight: 700; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+.date { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 6px; }
+select, input[type="text"] { width: 100%; height: 44px; padding: 0 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); font-size: 1rem; }
+.leap { display: flex; align-items: center; gap: 6px; font-size: .86rem; color: var(--muted); }
+.hours { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.hours button { border: 1px solid var(--line); background: var(--bg); border-radius: 12px; padding: 6px 2px; line-height: 1.25; display: grid; }
+.hours button b { font-family: var(--display); font-size: 1.05rem; }
+.hours button small { font-size: .7rem; color: var(--muted); }
+.hours button[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+.hours button[aria-pressed="true"] small { color: var(--on-brand); opacity: .8; }
+.hours .unknown { grid-column: span 4; }
+.consent { display: flex; gap: 8px; align-items: flex-start; font-size: .82rem; color: var(--muted); }
+.consent input { margin-top: 4px; accent-color: var(--brand); }
+.cta { height: 50px; border: 0; border-radius: 999px; background: var(--brand); color: var(--on-brand); font-size: 1.05rem; font-weight: 700; letter-spacing: .1em; }
+.cta:disabled { opacity: .6; }
+.err { color: var(--fire); font-size: .86rem; margin: 0; }
+.summary { font-family: var(--display); font-size: 1.3rem; line-height: 1.5; margin: 0; }
+.summary b { font-weight: 700; }
+.radar { display: block; width: 100%; max-width: 300px; margin: 0 auto; overflow: visible; }
+.radar .grid { fill: none; stroke: var(--line); stroke-width: 1; }
+.radar .axis { stroke: var(--line); stroke-width: 1; }
+.radar .shape { fill: var(--brand); fill-opacity: .18; stroke: var(--brand); stroke-width: 2.5; stroke-linejoin: round; transform-origin: 0 0; transform: scale(.02); transition: transform .8s cubic-bezier(.2,.8,.2,1); }
+.radar.on .shape { transform: scale(1); }
+.radar .pt { stroke: var(--card); stroke-width: 2; }
+.radar text { font-family: var(--display); text-anchor: middle; dominant-baseline: central; }
+.radar .el { font-size: 17px; font-weight: 700; }
+.radar .pc { font-family: var(--body); font-size: 11px; fill: var(--muted); }
+.bars { display: grid; gap: 8px; }
+.bar { display: grid; grid-template-columns: 2em 1fr 3.4em; align-items: center; gap: 8px; }
+.bar b { font-family: var(--display); font-size: 1.05rem; text-align: center; }
+.bar i { display: block; height: 14px; border-radius: 7px; background: var(--line); overflow: hidden; }
+.bar i span { display: block; height: 100%; border-radius: 7px; transition: width .7s ease; }
+.bar em { font-style: normal; font-size: .84rem; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+.tag { display: inline-block; font-size: .72rem; padding: 0 8px; border-radius: 999px; background: var(--brand-soft); color: var(--brand); margin-left: 6px; vertical-align: .1em; }
+.dm { display: flex; gap: 12px; align-items: center; }
+.dm .stone { flex: none; width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-family: var(--display); font-size: 1.5rem; }
+.dm p { margin: 0; }
+.dm small { color: var(--muted); }
+.crystals { display: grid; gap: 8px; }
+.crystal { display: grid; grid-template-columns: 44px 1fr; gap: 10px; align-items: center; padding: 10px; border-radius: 14px; background: var(--bg); }
+.crystal .dot { width: 44px; height: 44px; border-radius: 12px; background-size: cover; background-position: center; }
+.crystal b { display: block; }
+.crystal small { color: var(--muted); }
+.note { font-size: .78rem; color: var(--muted); margin: 0; }
+.actions { display: grid; gap: 8px; }
+.ghost { height: 46px; border: 1.5px solid var(--brand); border-radius: 999px; background: none; color: var(--brand); font-weight: 700; text-decoration: none; display: grid; place-items: center; }
+details { border-top: 1px solid var(--line); padding-top: 10px; }
+summary { cursor: pointer; font-size: .9rem; color: var(--muted); }
+.pillars { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); text-align: center; margin-top: 10px; }
+.pillars div { display: grid; gap: 2px; }
+.pillars small { color: var(--muted); font-size: .72rem; }
+.pillars span { font-family: var(--display); font-size: 1.5rem; line-height: 1.15; }
+.status { text-align: center; font-size: .8rem; color: var(--muted); margin: 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+<div class="gem" aria-hidden="true">五</div>
+<div>
+<h1>生日五行</h1>
+<p id="heroLine">輸入生日，看看你的五行偏哪裡、哪裡比較弱</p>
+</div>
+</header>
+<form class="card" id="f" novalidate>
+<label class="field">
+<span>怎麼稱呼你<small>選填</small></span>
+<input type="text" id="name" maxlength="20" placeholder="例如：小美" autocomplete="nickname">
+</label>
+<div class="field">
+<span>出生日期</span>
+<div class="seg" role="group" aria-label="曆法">
+<button type="button" data-cal="solar" aria-pressed="true">國曆</button>
+<button type="button" data-cal="lunar" aria-pressed="false">農曆</button>
+</div>
+<div class="date">
+<select id="y" aria-label="年"></select>
+<select id="m" aria-label="月"></select>
+<select id="d" aria-label="日"></select>
+</div>
+<label class="leap" id="leapRow" hidden><input type="checkbox" id="leap"> 這個月是閏月</label>
+</div>
+<div class="field">
+<span>出生時辰<small>不知道也可以</small></span>
+<div class="hours" id="hours" role="group" aria-label="出生時辰"></div>
+</div>
+<label class="consent"><input type="checkbox" id="consent" checked> <span>同意保存這次的生日與結果，讓 Sammi 為我推薦適合的水晶（不想保存可以取消勾選）</span></label>
+<p class="err" id="err" role="alert" hidden></p>
+<button class="cta" id="go" type="submit">看我的五行</button>
+</form>
+<section class="card" id="result" aria-live="polite" hidden>
+<p class="summary" id="summary"></p>
+<svg class="radar" id="radar" viewBox="-140 -132 280 268" role="img" aria-label="五行雷達圖"></svg>
+<div class="bars" id="bars"></div>
+<p class="note" id="hourNote" hidden>沒有出生時辰，只用年、月、日三柱計算，僅供參考。</p>
+<h2>你的本命</h2>
+<div class="dm" id="dm"></div>
+<h2 id="crystalTitle">適合你的水晶</h2>
+<div class="crystals" id="crystals"></div>
+<p class="note">水晶與五行的對應是民俗常見說法，配戴以喜歡、舒服為主。</p>
+<div class="actions">
+<a class="cta" id="ask" href="#" style="display:grid;place-items:center;text-decoration:none">問 Sammi 適合我的水晶</a>
+<button type="button" class="ghost" id="share">分享給朋友測測看</button>
+</div>
+<details>
+<summary>看我的八字</summary>
+<div class="pillars" id="pillars"></div>
+<p class="note" id="dateLine" style="text-align:center;margin-top:8px"></p>
+</details>
+</section>
+<p class="status" id="status"></p>
+</div>
+<script src="https://static.line-scdn.net/liff/edge/versions/2.31.2/sdk.js"></script>
+<script src="lib/lunar.min.js"></script>
+<script src="lib/wuxing.js"></script>
+<script src="app.js?v=20261110-3"></script>
+</body>
+</html>
