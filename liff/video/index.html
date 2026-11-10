@@ -79,6 +79,10 @@ position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; }
 .dir .hook::before { content: "開場 "; font-family: var(--mono); font-size: 11px; color: var(--rec); letter-spacing: .06em; }
 .dir p { margin: 0; font-size: 14px; color: var(--muted); }
 .dir .pick { font-size: 13px; color: var(--rec); font-weight: 700; }
+.dirbox { display: flex; flex-direction: column; gap: 6px; }
+.post { background: var(--card); border: 1px dashed var(--line); border-radius: 12px; padding: 10px 14px; display: flex; flex-direction: column; gap: 8px; }
+.post .vl { font-size: 11px; letter-spacing: .08em; color: var(--muted); }
+.post .ptxt { white-space: pre-line; font-size: 15px; line-height: 1.6; }
 .sheet { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
 .sheet h3 { margin: 0; font-size: 18px; font-family: var(--display); font-weight: 900; line-height: 1.4; }
 .seg { display: grid; grid-template-columns: 64px 1fr; gap: 10px; }
@@ -100,7 +104,7 @@ position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; }
 <header>
 <span class="rec"><i></i>REC · 60s</span>
 <h1>短影片題材產生器</h1>
-<p class="sub">輸入想講的主題，一次拿到三個影片方向、一分鐘講稿和畫面建議。依「16 條短影音心法」產生。</p>
+<p class="sub">寫下你想講什麼事情，一次拿到三個影片方向（含吸睛標題、貼文內文、hashtag）、一分鐘講稿和畫面建議。依「16 條短影音心法」產生。</p>
 </header>
 <div class="row" style="margin:0 0 12px"><button type="button" class="ghost" id="savedBtn">我的紀錄</button></div>
 <div id="savedList" hidden style="margin:0 0 16px"></div>
@@ -146,6 +150,6 @@ position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; }
 <p class="foot">內容由 AI 產生，發布前請自己看過一遍。</p>
 </div>
 <script src="https://static.line-scdn.net/liff/edge/versions/2.31.2/sdk.js"></script>
-<script src="app.js?v=20261104-1"></script>
+<script src="app.js?v=20261110-1"></script>
 </body>
 </html>
