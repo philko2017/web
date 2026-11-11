@@ -45,6 +45,12 @@ a.tool:active { transform: scale(.99); }
 .tool .tag { flex: none; font-size: .75rem; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; }
 .msg { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 24px 16px; text-align: center; color: var(--muted); }
 .msg h2 { margin: 0 0 6px; color: var(--ink); font-size: 1.05rem; }
+.wrap, .panel, .card, .order, .o, .sum, .kv, .two, .row, .line, .fr, .tiles, .list { min-width: 0; }
+.wrap > *, .panel > *, .two > *, .row > *, .sum > *, .kv > * { min-width: 0; }
+input, select, textarea { max-width: 100%; min-width: 0; box-sizing: border-box; }
+input[type="date"] { -webkit-appearance: none; appearance: none; min-height: 44px; }
+.two { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+h2, h3, b, small, dd, .note, .bank, .o div, .order div { overflow-wrap: anywhere; }
 </style>
 </head>
 <body>
@@ -61,6 +67,6 @@ a.tool:active { transform: scale(.99); }
 <div class="list" id="list" hidden></div>
 </div>
 <script src="https://static.line-scdn.net/liff/edge/versions/2.31.2/sdk.js"></script>
-<script src="app.js?v=20261111-2"></script>
+<script src="app.js?v=20261112-2"></script>
 </body>
 </html>

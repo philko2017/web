@@ -36,7 +36,7 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .btn.ghost { background: var(--brand-soft); color: var(--brand); font-weight: 500; }
 .btn.line { background: var(--card); border: 1px solid var(--line); color: var(--ink); font-weight: 500; }
 .btn:disabled { opacity: .55; }
-.row { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+.row { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; }
 .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 16px; display: grid; gap: 12px; }
 .list { display: grid; gap: 10px; }
 .p { display: flex; gap: 12px; align-items: center; width: 100%; text-align: left; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 10px; }
@@ -63,6 +63,12 @@ label.f textarea { min-height: 110px; resize: vertical; }
 .msg { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 24px 16px; text-align: center; color: var(--muted); }
 .msg h2 { margin: 0 0 6px; color: var(--ink); font-size: 1.05rem; }
 .meta { font-size: .8rem; color: var(--muted); margin: 0; }
+.wrap, .panel, .card, .order, .o, .sum, .kv, .two, .row, .line, .fr, .tiles, .list { min-width: 0; }
+.wrap > *, .panel > *, .two > *, .row > *, .sum > *, .kv > * { min-width: 0; }
+input, select, textarea { max-width: 100%; min-width: 0; box-sizing: border-box; }
+input[type="date"] { -webkit-appearance: none; appearance: none; min-height: 44px; }
+.two { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+h2, h3, b, small, dd, .note, .bank, .o div, .order div { overflow-wrap: anywhere; }
 </style>
 </head>
 <body>
@@ -112,6 +118,6 @@ label.f textarea { min-height: 110px; resize: vertical; }
 </form>
 </div>
 <script src="https://static.line-scdn.net/liff/edge/versions/2.31.2/sdk.js"></script>
-<script src="app.js?v=20261111-1"></script>
+<script src="app.js?v=20261112-2"></script>
 </body>
 </html>
