@@ -23,10 +23,6 @@
 --body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
 --display: "Noto Serif TC", "Songti TC", serif;
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
---bg: #17131D; --card: #221C2B; --ink: #EEE8F4; --muted: #A79DB3; --line: #352C40;
---brand: #B795E6; --brand-soft: #2E2440; --on-brand: #1E1428;
---wood: #6CC690; --fire: #FF7A6E; --earth: #DDA65C; --metal: #C9BFA9; --water: #7FA4F2; color-scheme: dark } }
 :root[data-theme="dark"] {
 --bg: #17131D; --card: #221C2B; --ink: #EEE8F4; --muted: #A79DB3; --line: #352C40;
 --brand: #B795E6; --brand-soft: #2E2440; --on-brand: #1E1428;
@@ -40,6 +36,23 @@ button, input, select { font: inherit; color: inherit; }
 button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 :focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 .hero { display: flex; gap: 12px; align-items: center; padding: 4px 2px; }
+.hero > div:nth-child(2) { flex: 1; min-width: 0; }
+.theme-btn { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: var(--card); display: grid; place-items: center; }
+.theme-btn svg { width: 19px; height: 19px; fill: none; stroke: var(--ink); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.exact { display: flex; align-items: center; gap: 8px; font-size: .86rem; color: var(--muted); }
+.exact input { width: auto; flex: 1; max-width: 160px; height: 40px; padding: 0 10px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); font-size: 1rem; }
+.power { display: grid; gap: 10px; }
+.level { font-family: var(--display); font-size: 1.2rem; font-weight: 700; margin: 0; }
+.meter { height: 12px; border-radius: 6px; background: var(--line); overflow: hidden; }
+.meter span { display: block; height: 100%; background: var(--brand); border-radius: 6px; transition: width .7s ease; }
+.meter-l { display: flex; justify-content: space-between; font-size: .74rem; color: var(--muted); margin-top: -6px; }
+.power ul { margin: 0; padding-left: 1.2em; font-size: .9rem; }
+.gods { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.god { border-radius: 14px; background: var(--bg); padding: 8px 4px; text-align: center; display: grid; line-height: 1.3; }
+.god small { color: var(--muted); font-size: .74rem; }
+.god b { font-family: var(--display); font-size: 1.5rem; }
+.god span { font-size: .72rem; color: var(--muted); }
+.why { margin: 0; font-size: .9rem; }
 .gem { flex: none; width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg, #8D63C4, #6A3D9E 55%, #4B2577); display: grid; place-items: center; color: #fff; font-family: var(--display); font-size: 1.4rem; }
 .hero h1 { margin: 0; font-family: var(--display); font-size: 1.4rem; letter-spacing: .08em; }
 .hero p { margin: 0; color: var(--muted); font-size: .86rem; }
@@ -111,8 +124,9 @@ summary { cursor: pointer; font-size: .9rem; color: var(--muted); }
 <div class="gem" aria-hidden="true">五</div>
 <div>
 <h1>生日五行</h1>
-<p id="heroLine">輸入生日，看看你的五行偏哪裡、哪裡比較弱</p>
+<p id="heroLine">輸入生日，看五行、強弱與用神</p>
 </div>
+<button type="button" class="theme-btn" id="theme" aria-label="切換深色模式"></button>
 </header>
 <form class="card" id="f" novalidate>
 <label class="field">
@@ -135,6 +149,8 @@ summary { cursor: pointer; font-size: .9rem; color: var(--muted); }
 <div class="field">
 <span>出生時辰<small>不知道也可以</small></span>
 <div class="hours" id="hours" role="group" aria-label="出生時辰"></div>
+<label class="exact">知道幾點幾分？<input type="time" id="time" aria-label="確切出生時間"></label>
+<p class="note" id="dstHint" hidden></p>
 </div>
 <label class="consent"><input type="checkbox" id="consent" checked> <span>同意保存這次的生日與結果，讓 Sammi 為我推薦適合的水晶（不想保存可以取消勾選）</span></label>
 <p class="err" id="err" role="alert" hidden></p>
@@ -145,9 +161,13 @@ summary { cursor: pointer; font-size: .9rem; color: var(--muted); }
 <svg class="radar" id="radar" viewBox="-140 -132 280 268" role="img" aria-label="五行雷達圖"></svg>
 <div class="bars" id="bars"></div>
 <p class="note" id="hourNote" hidden>沒有出生時辰，只用年、月、日三柱計算，僅供參考。</p>
+<p class="note" id="dstNote" hidden></p>
 <p class="note">純屬參考：五行比例以八字藏干加權計分，命理各家算法不同，不等同完整的命盤論斷。</p>
 <h2>你的本命</h2>
 <div class="dm" id="dm"></div>
+<h2>日主強弱與用神<span class="tag">滴天髓旺衰法</span></h2>
+<div class="power" id="power"></div>
+<p class="note">用神依「扶抑」原則自動判斷；實際論命還會看格局、調候與大運，純屬參考。</p>
 <h2 id="crystalTitle">適合你的水晶</h2>
 <div class="crystals" id="crystals"></div>
 <p class="note">水晶與五行的對應是民俗常見說法，配戴以喜歡、舒服為主。</p>
@@ -165,7 +185,7 @@ summary { cursor: pointer; font-size: .9rem; color: var(--muted); }
 </div>
 <script src="https://static.line-scdn.net/liff/edge/versions/2.31.2/sdk.js"></script>
 <script src="lib/lunar.min.js"></script>
-<script src="lib/wuxing.js"></script>
-<script src="app.js?v=20261111-1"></script>
+<script src="lib/wuxing.js?v=20261111-2"></script>
+<script src="app.js?v=20261111-2"></script>
 </body>
 </html>
