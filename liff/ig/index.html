@@ -61,7 +61,7 @@ padding: 6px 12px; border-radius: 999px; cursor: pointer; }
 .foot { color: var(--muted); font-size: 12px; text-align: center; margin: 0; }
 .tabs .chip { font-size: 15px; padding: 8px 18px; }
 .tip { color: var(--muted); font-size: 13px; margin: 0; }
-#parts { margin-top: 8px; }
+.near { margin-top: 8px; }
 </style>
 </head>
 <body>
@@ -150,7 +150,6 @@ padding: 6px 12px; border-radius: 999px; cursor: pointer; }
 <button type="button" class="chip" data-v="100" aria-pressed="false">100 字</button>
 <button type="button" class="chip" data-v="300" aria-pressed="false">300 字</button>
 <button type="button" class="chip" data-v="500" aria-pressed="false">500 字（Threads 上限）</button>
-<button type="button" class="chip" data-v="串文" aria-pressed="false">串文（3 到 5 則）</button>
 </div>
 </div>
 <button class="go" id="go" type="button">產生貼文</button>
@@ -161,7 +160,7 @@ padding: 6px 12px; border-radius: 999px; cursor: pointer; }
 <div>
 <label for="caption"><span id="captionLabel">內文</span> <span class="count" id="count"></span></label>
 <textarea id="caption" rows="10"></textarea>
-<div class="row" id="parts" hidden></div>
+<div class="row near"><button class="go" id="copy" type="button">複製內文</button></div>
 </div>
 <div id="commentBox">
 <label for="comment">一樓留言（發文後自己留在第一則，網址放這裡）</label>
@@ -169,7 +168,6 @@ padding: 6px 12px; border-radius: 999px; cursor: pointer; }
 <div class="row"><button class="ghost" id="copyComment" type="button">複製一樓留言</button></div>
 </div>
 <div class="row">
-<button class="go" id="copy" type="button">複製到剪貼簿</button>
 <button class="ghost" id="save" type="button">存檔</button>
 </div>
 <p class="status" id="saved" aria-live="polite"></p>
@@ -179,6 +177,6 @@ padding: 6px 12px; border-radius: 999px; cursor: pointer; }
 <p class="foot">內容由 AI 產生，發布前請自己看過一遍，不符合事實的地方要改掉。本工具並非 Threads 或 Meta 官方產品。</p>
 </div>
 <script src="https://static.line-scdn.net/liff/edge/versions/2.31.2/sdk.js"></script>
-<script src="app.js?v=20261114-1"></script>
+<script src="app.js?v=20261114-2"></script>
 </body>
 </html>
