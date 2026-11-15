@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.line-scdn.net https://liffsdk.line-scdn.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://idly-junction-altitude.ngrok-free.dev https://api.line.me https://*.line.me https://*.line-scdn.net https://uts-front.line-apps.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="robots" content="noindex, nofollow">
+<title>預約諮詢｜AI 學院</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<style>
+:root {
+--bg: #F3F1EE;
+--card: #FFFFFF;
+--ink: #1D2230;
+--muted: #6B6F7B;
+--line: #E2DED8;
+--accent: #E5432F;
+--focus: #2F5BD3;
+--ok: #1E824C;
+--body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+--bg: #15171D; --card: #1F222B; --ink: #ECEAE6; --muted: #9DA1AC; --line: #2E323D; --accent: #FF6450; --focus: #8EAAFF; --ok: #4CD98A; color-scheme: dark } }
+:root[data-theme="dark"] {
+--bg: #15171D; --card: #1F222B; --ink: #ECEAE6; --muted: #9DA1AC; --line: #2E323D; --accent: #FF6450; --focus: #8EAAFF; --ok: #4CD98A; color-scheme: dark }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.6; }
+.wrap { max-width: 520px; margin: 0 auto; padding-block: 20px 48px;
+padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+display: flex; flex-direction: column; gap: 16px; }
+header { display: flex; flex-direction: column; gap: 4px; }
+.head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.logo { width: 28px; height: 28px; flex: none; }
+h1 { font-weight: 900; font-size: 26px; line-height: 1.2; margin: 0; }
+.sub { color: var(--muted); margin: 0; font-size: 14px; }
+.box { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+label, .label { font-weight: 700; font-size: 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+input, textarea, select { display: block; width: 100%; font: inherit; font-size: 16px; color: var(--ink); background: var(--bg);
+border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+textarea { resize: vertical; }
+input:focus-visible, textarea:focus-visible, button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font: inherit; font-size: 14px; border: 1px solid var(--line); background: var(--bg); color: var(--ink);
+padding: 7px 13px; border-radius: 999px; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); font-weight: 700; }
+.tabs .chip { font-size: 15px; padding: 8px 16px; }
+.go { font: inherit; font-weight: 700; font-size: 16px; border: 0; border-radius: 12px; padding: 13px; cursor: pointer; background: var(--accent); color: #fff; width: 100%; }
+.go:disabled, .ghost:disabled, .chip:disabled { opacity: .45; cursor: default; }
+.ghost { font: inherit; font-size: 14px; background: none; border: 1px solid var(--line); color: var(--ink); border-radius: 10px; padding: 8px 12px; cursor: pointer; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.status { font-size: 13px; color: var(--muted); min-height: 1.2em; margin: 0; }
+.status.err { color: var(--accent); }
+.status.ok { color: var(--ok); font-weight: 500; }
+.tip { color: var(--muted); font-size: 13px; margin: 0; }
+.foot { color: var(--muted); font-size: 12px; text-align: center; margin: 0; }
+.day-strip { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+.day-card { flex: none; min-width: 72px; padding: 10px 8px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg);
+color: var(--ink); text-align: center; cursor: pointer; display: flex; flex-direction: column; gap: 2px; font: inherit; }
+.day-card.active { border: 2px solid var(--focus); background: var(--card); }
+.day-card.full { opacity: .45; }
+.day-date { font-weight: 700; font-size: 15px; }
+.day-wd { font-size: 12px; color: var(--muted); }
+.day-cnt { font-size: 11px; color: var(--ok); font-weight: 700; }
+.day-card.full .day-cnt { color: var(--muted); font-weight: 400; }
+.slot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.slot-btn { font: inherit; font-size: 15px; font-weight: 500; padding: 10px 6px; border-radius: 10px;
+border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; text-align: center; }
+.slot-btn[aria-pressed="true"] { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 700; }
+.bk-list { display: flex; flex-direction: column; gap: 10px; }
+.bk-card { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; background: var(--bg); display: flex; flex-direction: column; gap: 6px; }
+.bk-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.bk-time { font-weight: 700; font-size: 16px; }
+.bk-meta { font-size: 13px; color: var(--muted); }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; border: 1px solid var(--line); background: var(--card); }
+.badge.ok { color: var(--ok); border-color: var(--ok); }
+.badge.warn { color: var(--accent); border-color: var(--accent); }
+.wd-block { border-top: 1px solid var(--line); padding-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+.wd-head { display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<div class="head">
+<div class="brand">
+<svg class="logo" viewBox="0 0 28 28" aria-hidden="true">
+<rect width="28" height="28" rx="7" fill="#E5432F"/>
+<path d="M9 9h10M9 14h10M9 19h6" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+</svg>
+<h1>預約諮詢</h1>
+</div>
+<span id="quotaBadge" class="badge">載入中…</span>
+</div>
+<p class="sub">選擇方便的日期與時段，送出後即時為您保留。</p>
+</header>
+<div class="chips tabs" role="tablist">
+<button type="button" class="chip" id="tabBook" aria-pressed="true">📅 立即預約</button>
+<button type="button" class="chip" id="tabMine" aria-pressed="false">📋 我的預約</button>
+<button type="button" class="chip" id="tabAdmin" aria-pressed="false" hidden>⚙️ 管理設定</button>
+</div>
+<section id="panelBook" class="box">
+<div>
+<div class="label">1. 選擇日期</div>
+<div id="dayStrip" class="day-strip"></div>
+</div>
+<div>
+<div class="label">
+<span>2. 選擇時段（每節 <span id="durText">60</span> 分鐘）</span>
+<span id="pickedCount" class="tip">尚未選擇</span>
+</div>
+<div id="slotGrid" class="slot-grid"></div>
+<p id="slotEmpty" class="tip" hidden>這一天目前沒有可預約時段，請改選其他日期。</p>
+</div>
+<div id="selectedWrap" hidden>
+<div class="label">已選時段</div>
+<div id="selectedChips" class="chips"></div>
+</div>
+<div>
+<label for="custName">3. 您的稱呼</label>
+<input id="custName" type="text" maxlength="40" placeholder="例如：王小明">
+</div>
+<div>
+<label for="custContact">聯絡方式（手機或 LINE ID，選填）</label>
+<input id="custContact" type="text" maxlength="80" placeholder="方便我們臨時有異動時聯繫您">
+</div>
+<div>
+<label for="custNote">想討論的主題或備註（選填）</label>
+<textarea id="custNote" rows="2" maxlength="300" placeholder="例如：想了解 AI 自動化導入流程"></textarea>
+</div>
+<button id="bookBtn" type="button" class="go" disabled>請先選擇時段</button>
+<p id="bookStatus" class="status" role="status"></p>
+</section>
+<section id="panelMine" class="box" hidden>
+<div class="head">
+<div class="label" style="margin:0">即將到來的預約</div>
+<button id="refreshMineBtn" type="button" class="ghost">重新整理</button>
+</div>
+<div id="myList" class="bk-list"></div>
+<p id="myEmpty" class="tip" hidden>您目前沒有預約中的時段，歡迎到「立即預約」挑選時間！</p>
+<p id="mineStatus" class="status" role="status"></p>
+</section>
+<section id="panelAdmin" class="box" hidden>
+<div class="head">
+<div class="label" style="margin:0">Google 日曆同步狀態</div>
+<span id="gcalBadge" class="badge">檢查中…</span>
+</div>
+<p id="gcalTip" class="tip"></p>
+<div class="wd-block">
+<div class="label" style="margin:0">每位客戶同時最多預約數</div>
+<div id="maxUserChips" class="chips">
+<button type="button" class="chip" data-v="1">1 個時段</button>
+<button type="button" class="chip" data-v="2">2 個時段</button>
+<button type="button" class="chip" data-v="3">3 個時段</button>
+</div>
+</div>
+<div class="wd-block">
+<div class="label" style="margin:0">每節預約時長</div>
+<div id="durChips" class="chips">
+<button type="button" class="chip" data-v="30">30 分鐘</button>
+<button type="button" class="chip" data-v="60">60 分鐘</button>
+<button type="button" class="chip" data-v="90">90 分鐘</button>
+</div>
+</div>
+<div class="wd-block">
+<div class="label" style="margin:0">開放預約未來天數</div>
+<div id="aheadChips" class="chips">
+<button type="button" class="chip" data-v="7">7 天內</button>
+<button type="button" class="chip" data-v="14">14 天內</button>
+<button type="button" class="chip" data-v="30">30 天內</button>
+</div>
+</div>
+<div class="wd-block">
+<div class="label" style="margin:0">至少需提前幾小時預約</div>
+<div id="noticeChips" class="chips">
+<button type="button" class="chip" data-v="2">2 小時</button>
+<button type="button" class="chip" data-v="4">4 小時</button>
+<button type="button" class="chip" data-v="12">12 小時</button>
+<button type="button" class="chip" data-v="24">24 小時</button>
+</div>
+</div>
+<div class="wd-block">
+<div class="label" style="margin:0">特定公休／不開放日期</div>
+<div class="row">
+<input id="closedDateInput" type="date" style="flex:1;min-width:140px">
+<button id="addClosedBtn" type="button" class="ghost">加入公休日</button>
+</div>
+<div id="closedList" class="chips"></div>
+</div>
+<div class="wd-block">
+<div class="head">
+<div class="label" style="margin:0">每週固定開放時段</div>
+<button id="presetWeekdayBtn" type="button" class="ghost">一鍵帶入平日預設</button>
+</div>
+<p class="tip">點選要開放的整點；已選的會自動亮起。</p>
+<div id="weeklyEditor"></div>
+</div>
+<button id="saveCfgBtn" type="button" class="go">💾 儲存所有預約設定</button>
+<p id="adminStatus" class="status" role="status"></p>
+<div class="wd-block">
+<div class="label" style="margin:0">全部客戶預約名單（即將到來）</div>
+<div id="allBookingsList" class="bk-list"></div>
+<p id="allEmpty" class="tip" hidden>目前沒有待服務的客戶預約。</p>
+</div>
+</section>
+<p class="foot">AI 學院 · 線上預約系統</p>
+</div>
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
