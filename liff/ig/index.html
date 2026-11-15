@@ -62,6 +62,15 @@ padding: 6px 12px; border-radius: 999px; cursor: pointer; }
 .tabs .chip { font-size: 15px; padding: 8px 18px; }
 .tip { color: var(--muted); font-size: 13px; margin: 0; }
 .near { margin-top: 8px; }
+.draft-list { display: flex; flex-direction: column; gap: 12px; }
+.draft-card { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; background: var(--bg); cursor: pointer; display: flex; flex-direction: column; gap: 6px; }
+.draft-card.active { border: 2px solid var(--focus); }
+.draft-meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 12px; color: var(--muted); }
+.badge { background: var(--card); border: 1px solid var(--line); padding: 2px 8px; border-radius: 999px; font-size: 12px; color: var(--ink); }
+.badge.cat { background: var(--ink); color: var(--bg); font-weight: 700; border-color: var(--ink); }
+.draft-title { font-weight: 700; font-size: 15px; margin: 0; }
+.draft-summary { font-size: 13px; color: var(--muted); margin: 0; }
+.draft-preview { font-size: 14px; color: var(--ink); white-space: pre-line; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin: 0; }
 </style>
 </head>
 <body>
@@ -77,7 +86,19 @@ padding: 6px 12px; border-radius: 999px; cursor: pointer; }
 <div class="chips tabs" id="tab" role="group" aria-label="功能">
 <button type="button" class="chip" data-v="post" aria-pressed="true">寫貼文</button>
 <button type="button" class="chip" data-v="reply" aria-pressed="false">回覆留言</button>
+<button type="button" class="chip" id="patrolTabBtn" data-v="patrol" aria-pressed="false" hidden>📰 時事草稿</button>
 </div>
+<section class="box" id="patrolForm" hidden>
+<div class="row" style="justify-content:space-between">
+<span class="label" style="margin:0">每日 07:00／11:00／19:00 自動海巡 3 篇</span>
+<div class="row">
+<button class="ghost" id="pRefresh" type="button">🔄 重整</button>
+<button class="ghost" id="pGo" type="button">🔍 立即海巡 3 篇</button>
+</div>
+</div>
+<p class="status" id="pstatus" aria-live="polite"></p>
+<div id="draftList" class="draft-list"></div>
+</section>
 <section class="box" id="replyForm" hidden>
 <div>
 <label for="post">對方的貼文或留言</label>
@@ -164,12 +185,16 @@ padding: 6px 12px; border-radius: 999px; cursor: pointer; }
 </section>
 <section class="box" id="result" hidden>
 <p class="tip" id="modelTag" hidden></p>
+<p class="tip" id="newsInfo" hidden></p>
 <div class="core" id="coreBox"><span class="label">這篇的主旨（不會複製，只給你檢查方向）</span><p id="core"></p></div>
 <div>
 <label for="caption"><span id="captionLabel">內文</span> <span class="count" id="count"></span></label>
 <textarea id="caption" rows="10"></textarea>
-<div class="row near"><button class="go" id="copy" type="button">複製內文</button></div>
-<p class="tip">按複製時會記下這個版本，之後 AI 會參考你最近改過的定稿，越用越像你。</p>
+<div class="row near">
+<button class="go" id="copy" type="button">複製內文</button>
+<button class="go" id="pubThreads" type="button" hidden style="background:#2f5d50">🚀 發送到 Threads</button>
+</div>
+<p class="tip">按複製或發送時會記下這個版本，之後 AI 會參考你最近改過的定稿，越用越像你。</p>
 </div>
 <div id="commentBox">
 <label for="comment">一樓留言（發文後自己留在第一則，網址放這裡）</label>
@@ -186,6 +211,6 @@ padding: 6px 12px; border-radius: 999px; cursor: pointer; }
 <p class="foot">內容由 AI 產生，發布前請自己看過一遍，不符合事實的地方要改掉。本工具並非 Threads 或 Meta 官方產品。</p>
 </div>
 <script src="https://static.line-scdn.net/liff/edge/versions/2.31.2/sdk.js"></script>
-<script src="app.js?v=20261114-5"></script>
+<script src="app.js?v=20261115-1"></script>
 </body>
 </html>
