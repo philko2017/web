@@ -81,14 +81,14 @@ padding: 6px 12px; border-radius: 999px; cursor: pointer; }
 <button type="button" class="chip" data-v="light" aria-pressed="false">淺色</button>
 <button type="button" class="chip" data-v="dark" aria-pressed="false">深色</button>
 </div></div>
-<p class="sub" id="sub">輸入一個想法，選好結尾形式，馬上拿到排好段落的內文，改好一鍵複製貼到 Threads。</p>
+<p class="sub" id="sub">每日 07:00、11:00、19:00 自動海巡 3 篇台灣時事草稿，點選下方卡片即可修改並一鍵發送到 Threads。</p>
 </header>
 <div class="chips tabs" id="tab" role="group" aria-label="功能">
-<button type="button" class="chip" data-v="post" aria-pressed="true">寫貼文</button>
-<button type="button" class="chip" data-v="reply" aria-pressed="false">回覆留言</button>
-<button type="button" class="chip" id="patrolTabBtn" data-v="patrol" aria-pressed="false" hidden>📰 時事草稿</button>
+<button type="button" class="chip" id="patrolTabBtn" data-v="patrol" aria-pressed="true">海巡時事</button>
+<button type="button" class="chip" data-v="post" aria-pressed="false">撰寫貼文</button>
+<button type="button" class="chip" data-v="reply" aria-pressed="false">回覆貼文</button>
 </div>
-<section class="box" id="patrolForm" hidden>
+<section class="box" id="patrolForm">
 <div class="row" style="justify-content:space-between">
 <span class="label" style="margin:0">每日 07:00／11:00／19:00 自動海巡 3 篇</span>
 <div class="row">
@@ -124,7 +124,7 @@ padding: 6px 12px; border-radius: 999px; cursor: pointer; }
 <p class="status" id="rstatus" aria-live="polite"></p>
 <p class="tip">回覆前改一兩句，加進你自己的話；短時間大量留言，可能被 Threads 當成垃圾訊息。</p>
 </section>
-<section class="box" id="postForm">
+<section class="box" id="postForm" hidden>
 <div>
 <label for="idea">你的想法</label>
 <textarea id="idea" rows="3" placeholder="想講什麼，一兩句話就好"></textarea>
@@ -211,6 +211,6 @@ padding: 6px 12px; border-radius: 999px; cursor: pointer; }
 <p class="foot">內容由 AI 產生，發布前請自己看過一遍，不符合事實的地方要改掉。本工具並非 Threads 或 Meta 官方產品。</p>
 </div>
 <script src="https://static.line-scdn.net/liff/edge/versions/2.31.2/sdk.js"></script>
-<script src="app.js?v=20261115-4"></script>
+<script src="app.js?v=20261115-5"></script>
 </body>
 </html>
