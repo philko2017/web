@@ -96,6 +96,18 @@ position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; }
 .view b { display: block; font-size: 14px; font-weight: 700; }
 .view .cap { display: inline-block; margin-top: 6px; font-weight: 900; font-size: 13px; background: var(--ink); color: var(--bg); padding: 2px 8px; border-radius: 4px; }
 .view .tip { margin-top: 6px; font-size: 13px; color: var(--muted); }
+#f[data-kind="news"] .k-topic, #f[data-kind="news"] #topicBox, #f[data-kind="news"] #go { display: none !important; }
+.kind { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 4px; }
+.kind button { font: inherit; font-size: 15px; font-weight: 700; border: 0; background: none; color: var(--muted); padding: 9px 4px; border-radius: 9px; cursor: pointer; }
+.kind button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.nw { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 6px; }
+.nw h3 { margin: 0; font-size: 16px; line-height: 1.45; font-family: var(--display); font-weight: 900; }
+.nw p { margin: 0; font-size: 14px; }
+.nw .nm { font-size: 12px; color: var(--muted); }
+.nw .na { color: var(--tag); }
+.nw .lk { display: flex; flex-wrap: wrap; gap: 6px; }
+.nw .lk a, .nsrc a { font-size: 12px; color: var(--tag); word-break: break-all; }
+.nsrc { font-size: 12px; color: var(--muted); display: flex; flex-direction: column; gap: 4px; }
 .foot { font-size: 12px; color: var(--muted); text-align: center; }
 </style>
 </head>
@@ -109,16 +121,28 @@ position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; }
 <div class="row" style="margin:0 0 12px"><button type="button" class="ghost" id="savedBtn">我的紀錄</button></div>
 <div id="savedList" hidden style="margin:0 0 16px"></div>
 <form id="f">
+<div class="kind" id="kind" role="group" aria-label="題材來源" hidden>
+<button type="button" data-kind="topic" aria-pressed="true">題材</button>
+<button type="button" data-kind="news" aria-pressed="false">時事</button>
+</div>
+<div id="newsBox" hidden>
+<label for="event">想談的時事 <small>（可以加上想談的角度）</small></label>
+<input type="text" id="event" placeholder="例如：黃仁勳的事件對女性的啟發" autocomplete="off" maxlength="200">
+<p class="meta" style="margin:6px 0 10px">時事影片只講觀點，完全不提水晶、產品和銷售。</p>
+<button class="go" id="ngo" type="button">搜尋近期新聞</button>
+<div id="news" style="display:flex;flex-direction:column;gap:10px;margin-top:12px"></div>
+<div class="nsrc" id="nsrc" hidden></div>
+</div>
 <div id="topicBox" hidden></div>
-<div>
+<div class="k-topic">
 <label for="topic">你想講什麼事情</label>
 <input type="text" id="topic" placeholder="例如：用 AI 十分鐘做完簡報" autocomplete="off" required>
 </div>
-<div>
+<div class="k-topic">
 <label for="who">你是誰 <small>（選填：職業、專長、在賣什麼）</small></label>
 <textarea id="who" placeholder="例如：教上班族用 AI 的講師"></textarea>
 </div>
-<div>
+<div class="k-topic">
 <label id="ctaLabel">希望觀眾看完做什麼</label>
 <div class="chips" id="cta" role="group" aria-labelledby="ctaLabel">
 <button type="button" class="chip" aria-pressed="true">私訊我</button>
@@ -151,6 +175,6 @@ position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; }
 <p class="foot">內容由 AI 產生，發布前請自己看過一遍。</p>
 </div>
 <script src="https://static.line-scdn.net/liff/edge/versions/2.31.2/sdk.js"></script>
-<script src="app.js?v=20261113"></script>
+<script src="app.js?v=20261116"></script>
 </body>
 </html>
