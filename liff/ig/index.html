@@ -109,6 +109,7 @@ padding: 6px 12px; border-radius: 999px; cursor: pointer; }
 <div class="chips" id="tone" role="group" aria-labelledby="toneLabel">
 <button type="button" class="chip" data-v="打氣" aria-pressed="true">打氣</button>
 <button type="button" class="chip" data-v="見解" aria-pressed="false">有見解的回應</button>
+<button type="button" class="chip" data-v="觀點" aria-pressed="false" id="toneOpinion" hidden>觀點長回覆</button>
 </div>
 </div>
 <div>
@@ -125,10 +126,22 @@ padding: 6px 12px; border-radius: 999px; cursor: pointer; }
 <p class="tip">回覆前改一兩句，加進你自己的話；短時間大量留言，可能被 Threads 當成垃圾訊息。</p>
 </section>
 <section class="box" id="postForm" hidden>
+<div id="kindBox" hidden>
+<span class="label" id="kindLabel">主力文（管理者）</span>
+<div class="chips" id="kind" role="group" aria-labelledby="kindLabel">
+<button type="button" class="chip" data-v="" aria-pressed="true">一般</button>
+<button type="button" class="chip" data-v="news" aria-pressed="false">新聞加立場</button>
+<button type="button" class="chip" data-v="ai" aria-pressed="false">AI 實戰</button>
+<button type="button" class="chip" data-v="dad" aria-pressed="false">個人短文</button>
+<button type="button" class="chip" data-v="short" aria-pressed="false">平日短文</button>
+</div>
+<p class="tip" id="kindTip" hidden></p>
+</div>
 <div>
-<label for="idea">你的想法</label>
+<label for="idea" id="ideaLabel">你的想法</label>
 <textarea id="idea" rows="3" placeholder="想講什麼，一兩句話就好"></textarea>
 </div>
+<div id="genOpts">
 <div>
 <span class="label" id="styleLabel">文體</span>
 <div class="chips" id="style" role="group" aria-labelledby="styleLabel">
@@ -180,6 +193,7 @@ padding: 6px 12px; border-radius: 999px; cursor: pointer; }
 <button type="button" class="chip" data-v="500" aria-pressed="false">500 字（Threads 上限）</button>
 </div>
 </div>
+</div>
 <button class="go" id="go" type="button">產生貼文</button>
 <p class="status" id="status" aria-live="polite"></p>
 </section>
@@ -211,6 +225,6 @@ padding: 6px 12px; border-radius: 999px; cursor: pointer; }
 <p class="foot">內容由 AI 產生，發布前請自己看過一遍，不符合事實的地方要改掉。本工具並非 Threads 或 Meta 官方產品。</p>
 </div>
 <script src="https://static.line-scdn.net/liff/edge/versions/2.31.2/sdk.js"></script>
-<script src="app.js?v=20261115-5"></script>
+<script src="app.js?v=20261117-1"></script>
 </body>
 </html>
