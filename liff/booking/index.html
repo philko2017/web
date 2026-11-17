@@ -101,7 +101,7 @@ border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor:
 <div class="chips tabs" role="tablist">
 <button type="button" class="chip" id="tabBook" aria-pressed="true">📅 立即預約</button>
 <button type="button" class="chip" id="tabMine" aria-pressed="false">📋 我的預約</button>
-<button type="button" class="chip" id="tabAdmin" aria-pressed="false" hidden>⚙️ 管理設定</button>
+<button type="button" class="chip" id="tabAdmin" aria-pressed="false" hidden>⚙️ 管理預約</button>
 </div>
 <section id="panelBook" class="box">
 <div>
@@ -150,6 +150,11 @@ border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor:
 <span id="gcalBadge" class="badge">檢查中…</span>
 </div>
 <p id="gcalTip" class="tip"></p>
+<div class="wd-block">
+<div class="label" style="margin:0">📋 全部客戶預約名單（即將到來）</div>
+<div id="allBookingsList" class="bk-list"></div>
+<p id="allEmpty" class="tip" hidden>目前沒有待服務的客戶預約。</p>
+</div>
 <div class="wd-block">
 <div class="label" style="margin:0">每位客戶同時最多預約數</div>
 <div id="maxUserChips" class="chips">
@@ -201,11 +206,6 @@ border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor:
 </div>
 <button id="saveCfgBtn" type="button" class="go">💾 儲存所有預約設定</button>
 <p id="adminStatus" class="status" role="status"></p>
-<div class="wd-block">
-<div class="label" style="margin:0">全部客戶預約名單（即將到來）</div>
-<div id="allBookingsList" class="bk-list"></div>
-<p id="allEmpty" class="tip" hidden>目前沒有待服務的客戶預約。</p>
-</div>
 </section>
 <p class="foot">AI 學院 · 線上預約系統</p>
 </div>
