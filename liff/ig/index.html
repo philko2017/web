@@ -127,15 +127,23 @@ padding: 6px 12px; border-radius: 999px; cursor: pointer; }
 </section>
 <section class="box" id="postForm" hidden>
 <div id="kindBox" hidden>
-<span class="label" id="kindLabel">主力文（管理者）</span>
+<span class="label" id="kindLabel">內容方向（管理者）</span>
 <div class="chips" id="kind" role="group" aria-labelledby="kindLabel">
 <button type="button" class="chip" data-v="" aria-pressed="true">一般</button>
-<button type="button" class="chip" data-v="news" aria-pressed="false">新聞加立場</button>
-<button type="button" class="chip" data-v="ai" aria-pressed="false">AI 實戰</button>
-<button type="button" class="chip" data-v="dad" aria-pressed="false">個人短文</button>
+<button type="button" class="chip" data-v="boss" aria-pressed="false">老闆實錄</button>
+<button type="button" class="chip" data-v="mirror" aria-pressed="false">AI 照妖鏡</button>
+<button type="button" class="chip" data-v="news" aria-pressed="false">新聞算帳</button>
+<button type="button" class="chip" data-v="dad" aria-pressed="false">爸爸日常</button>
 <button type="button" class="chip" data-v="short" aria-pressed="false">平日短文</button>
 </div>
 <p class="tip" id="kindTip" hidden></p>
+<div id="toolBox" hidden>
+<span class="label" id="toolLabel">這篇提工具（大約三到四篇提一次）</span>
+<div class="chips" id="tool" role="group" aria-labelledby="toolLabel">
+<button type="button" class="chip" data-v="" aria-pressed="true">不提</button>
+<button type="button" class="chip" data-v="1" aria-pressed="false">提，一樓留言帶 73737</button>
+</div>
+</div>
 </div>
 <div>
 <label for="idea" id="ideaLabel">你的想法</label>
@@ -201,6 +209,7 @@ padding: 6px 12px; border-radius: 999px; cursor: pointer; }
 <p class="tip" id="modelTag" hidden></p>
 <p class="tip" id="newsInfo" hidden></p>
 <div class="core" id="coreBox"><span class="label">這篇的主旨（不會複製，只給你檢查方向）</span><p id="core"></p></div>
+<div class="core" id="needBox" hidden><span class="label">還可以補的細節（補進素材再產生一次會更具體）</span><p id="need"></p></div>
 <div>
 <label for="caption"><span id="captionLabel">內文</span> <span class="count" id="count"></span></label>
 <textarea id="caption" rows="10"></textarea>
@@ -225,6 +234,6 @@ padding: 6px 12px; border-radius: 999px; cursor: pointer; }
 <p class="foot">內容由 AI 產生，發布前請自己看過一遍，不符合事實的地方要改掉。本工具並非 Threads 或 Meta 官方產品。</p>
 </div>
 <script src="https://static.line-scdn.net/liff/edge/versions/2.31.2/sdk.js"></script>
-<script src="app.js?v=20261117-1"></script>
+<script src="app.js?v=20261117-2"></script>
 </body>
 </html>
