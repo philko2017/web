@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.line-scdn.net https://liffsdk.line-scdn.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://idly-junction-altitude.ngrok-free.dev https://hook.us2.make.com https://api.line.me https://*.line.me https://*.line-scdn.net https://uts-front.line-apps.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.line-scdn.net https://liffsdk.line-scdn.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://idly-junction-altitude.ngrok-free.dev https://hook.us2.make.com https://api.line.me https://*.line.me https://*.line-scdn.net https://uts-front.line-apps.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="robots" content="noindex, nofollow">
 <title>Threads 貼文產生器</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,9 +37,11 @@ h1 { font-weight: 900; font-size: 28px; line-height: 1.2; margin: 0; }
 .box { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
 label, .label { font-weight: 700; font-size: 14px; display: flex; justify-content: space-between; margin-bottom: 6px; }
 .count { font-weight: 400; color: var(--muted); }
-textarea { display: block; width: 100%; font: inherit; font-size: 16px; color: var(--ink); background: var(--bg);
-border: 1px solid var(--line); border-radius: 10px; padding: 11px 12px; resize: vertical; }
-textarea:focus-visible, button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+textarea, input[type="url"] { display: block; width: 100%; font: inherit; font-size: 16px; color: var(--ink); background: var(--bg);
+border: 1px solid var(--line); border-radius: 10px; padding: 11px 12px; }
+textarea { resize: vertical; }
+textarea:focus-visible, input[type="url"]:focus-visible, button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+#imgPreview { display: block; width: 100%; max-height: 260px; object-fit: cover; border-radius: 10px; margin-top: 8px; border: 1px solid var(--line); }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip { font: inherit; font-size: 14px; border: 1px solid var(--line); background: var(--bg); color: var(--ink);
 padding: 6px 12px; border-radius: 999px; cursor: pointer; }
@@ -84,13 +86,13 @@ padding: 6px 12px; border-radius: 999px; cursor: pointer; }
 <p class="sub" id="sub">輸入一個想法，選好結尾形式，馬上拿到排好段落的內文，改好一鍵複製或發送到 Threads。</p>
 </header>
 <div class="chips tabs" id="tab" role="group" aria-label="功能">
-<button type="button" class="chip" id="patrolTabBtn" data-v="patrol" aria-pressed="false" hidden>海巡時事</button>
+<button type="button" class="chip" id="patrolTabBtn" data-v="patrol" aria-pressed="false" hidden>待審草稿</button>
 <button type="button" class="chip" data-v="post" aria-pressed="true">撰寫貼文</button>
 <button type="button" class="chip" data-v="reply" aria-pressed="false">回覆貼文</button>
 </div>
 <section class="box" id="patrolForm" hidden>
 <div class="row" style="justify-content:space-between">
-<span class="label" style="margin:0">每日 07:00／11:00／19:00 自動海巡 3 篇</span>
+<span class="label" id="patrolTitle" style="margin:0">待審草稿匣（檢視 → 編輯 → 發送到 Threads）</span>
 <div class="row">
 <button class="ghost" id="pRefresh" type="button">🔄 重整</button>
 <button class="ghost" id="pGo" type="button">🔍 立即海巡 3 篇</button>
@@ -219,6 +221,14 @@ padding: 6px 12px; border-radius: 999px; cursor: pointer; }
 </div>
 <p class="tip">按「儲存」、「複製」或「發送到 Threads」時都會記下這個版本，之後 AI 會參考你改過的定稿，越用越像你。</p>
 </div>
+<div id="imgBox" hidden>
+<label for="imageUrl">附圖網址（選填，留空則發純文字；須為 https:// 開頭）</label>
+<div class="row">
+<input id="imageUrl" type="url" placeholder="https://..." style="flex:1;min-width:0" />
+<button class="ghost" id="clearImg" type="button">清除圖片</button>
+</div>
+<img id="imgPreview" alt="附圖預覽" hidden />
+</div>
 <div id="commentBox">
 <label for="comment">一樓留言（發文後自己留在第一則，網址放這裡）</label>
 <textarea id="comment" rows="3"></textarea>
@@ -234,6 +244,6 @@ padding: 6px 12px; border-radius: 999px; cursor: pointer; }
 <p class="foot">內容由 AI 產生，發布前請自己看過一遍，不符合事實的地方要改掉。本工具並非 Threads 或 Meta 官方產品。</p>
 </div>
 <script src="https://static.line-scdn.net/liff/edge/versions/2.31.2/sdk.js"></script>
-<script src="app.js?v=20261117-2"></script>
+<script src="app.js?v=20261122-1"></script>
 </body>
 </html>
